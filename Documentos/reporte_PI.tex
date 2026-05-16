@@ -1,0 +1,251 @@
+\documentclass[aps, twocolumn, 11pt]{revtex4-2}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-noindentfirst]{babel}
+
+\usepackage{amsmath, amssymb}
+
+\usepackage{graphicx}   
+\usepackage{float}      
+
+\usepackage{booktabs}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\begin{document}
+
+\title{Análisis estadístico y predicción de variación de precios entre tiendas (GEOPRECIO)}
+
+\author{Hernández Juarez Perla}
+\author{Carretero Contreras Kitzia D.}
+\author{Molotla Jimenez Isaac E.}
+\author{Cintora Ruvalcaba Samuel S.}
+\affiliation{Universidad de Guadalajara}
+
+\begin{abstract}
+Se compararon precios de leche, aceite y arroz en Bodega Aurrera, Walmart, La Comer
+y Soriana. Bodega Aurrera resultó más barato en marcas masivas de leche; Walmart cobró entre \$1.65 y \$2.51~MXN más por productos equivalentes; y el arroz presentó heterocedasticidad entre cadenas.
+\end{abstract}
+
+\maketitle  
+
+\section{Introducción}
+
+ El presente trabajo analiza si existen diferencias estadísticamente significativas en el precio de productos de la canasta básica entre cadenas de supermercados en México. Se aplicaron tres pruebas de inferencia estadística: ANOVA de un factor, observaciones pareadas y razón de varianzas.
+
+\section{Planteamiento del Problema}
+
+En la actualidad, el consumidor mexicano enfrenta fluctuaciones constantes en los precios de la canasta básica debido a la inflación y las dinámicas del mercado. Frecuentemente se asume que ciertas tiendas son “más baratas” o que los productos cuestan lo mismo independientemente del supermercado. Sin embargo, no está estadísticamente comprobado si cambiar de tienda genera un ahorro real y significativo en los mismos productos o si las diferencias observadas responden al azar y al ruido del mercado.
+
+Para responder esta problemática, se analizaron precios de leche, aceite y arroz en cuatro cadenas de supermercados: Bodega Aurrera, Walmart, La Comer y Soriana, mediante tres pares de hipótesis aplicados a una base de datos obtenida autónomamente.
+
+Para el caso de las leches se aplicó \textbf{ANOVA} de un solo factor  \cite{walpole2012}:
+\begin{itemize}
+	\item \textit{\textbf{Hipótesis Nula (H\textsubscript{0})}: El precio promedio por litro de leche es estadísticamente igual en todas las tiendas. Las diferencias observadas son producto del azar.}
+	\item \textit{\textbf{Hipótesis Alternativa (H\textsubscript{1})}:  Al menos un supermercado ofrece un precio promedio significativamente distinto.}	
+\end{itemize}
+
+Para comparar directamente los precios entre Walmart y Bodega Aurrera, se utilizó una prueba de hipótesis para \textbf{observaciones pareadas}.
+
+\begin{itemize}
+	\item \textit{\textbf{Hipótesis Nula (H\textsubscript{0})}: No existe ninguna diferencia real; cualquier disparidad observada en la muestra se atribuye al error de muestreo y al ruido del mercado.}
+	\item \textit{\textbf{Hipótesis Alternativa (H\textsubscript{1})}:  Existe una diferencia significativa entre los precios promedio.}	
+\end{itemize}
+Se fijó un nivel de significancia de $\alpha$ = 0.05.
+
+Para el caso del arroz se realizó una \textbf{prueba de razón entre varianzas} para comparar la dispersión de precios entre tiendas.
+
+\textbf{Hipótesis para Shapiro-Wilk} (para cada tienda):
+\begin{itemize}
+	\item \textit{\textbf{Hipótesis Nula (H\textsubscript{0})}: Los datos siguen una distribución normal.}
+	\item \textit{\textbf{Hipótesis Alternativa (H\textsubscript{1})}:  Los datos no siguen una distribución normal.}	
+\end{itemize}
+Si el valor p > 0.05 no se rechaza H\textsubscript{0} y se asume normalidad.
+
+\textbf{Hipótesis para razón entre varianzas} (por cada par de tiendas):
+\begin{itemize}
+	\item \textit{\textbf{Hipótesis Nula (H\textsubscript{0})}: $\sigma_1^2 = \sigma_2^2$  Las varianzas de los precios entre las dos tiendas comparadas son iguales}
+	\item \textit{\textbf{Hipótesis Alternativa (H\textsubscript{1})}: $\sigma_1^2 \neq \sigma_2^2$  Las varianzas de los precios son diferentes}	
+\end{itemize}
+
+\textbf{Hipótesis para prueba de Levene} (las cuatro tiendas incluyendo La Comer):
+\begin{itemize}
+	\item \textit{\textbf{Hipótesis Nula (H\textsubscript{0})}: Las varianzas son homogéneas (homocedasticidad).}
+	\item \textit{\textbf{Hipótesis Alternativa (H\textsubscript{1})}:  Las varianzas no son homogéneas (heterocedasticidad).}	
+\end{itemize}
+
+\section{Metodología}
+
+La base de datos se construyó mediante web scraping de las plataformas digitales de Walmart, Bodega Aurrera, La Comer y Soriana durante abril de 2026, obteniendo 1,513 registros. Posteriormente se realizó una limpieza manual para eliminar productos no alimenticios y estandarizar los precios de leche a costo por litro, permitiendo comparar presentaciones de distinto volumen. El análisis comparativo se centró principalmente en Walmart y Bodega Aurrera por ser las cadenas más representativas.
+
+Para el análisis de precios de leche entre supermercados se empleó \textbf{ANOVA de un factor}, prueba que permite determinar si las medias de tres o más grupos independientes son estadísticamente iguales.
+
+En el análisis comparativo entre Walmart y Bodega Aurrera, la variable de interés fue la diferencia de precios entre productos equivalentes. La hipótesis nula establece que no existe una diferencia real en los precios promedio y que cualquier variación se debe al azar o al error de muestreo, mientras que la hipótesis alternativa sostiene que existe una diferencia estadísticamente significativa entre ambas tiendas. Para evaluar estas hipótesis se utilizó un nivel de significancia de $\alpha = 0.05$.
+
+Para el arroz se aplicó la prueba de \textbf{razón entre varianzas}, con el fin de comparar la dispersión de precios entre tiendas. Debido a que esta prueba requiere normalidad poblacional, previamente se utilizó la prueba de \textbf{Shapiro-Wilk}. Cuando no se cumplió este supuesto, se empleó la prueba de \textbf{Levene}, ya que no requiere normalidad y permite comparar más de dos grupos simultáneamente.
+
+\section{Resultados}
+
+Los resultados del análisis \textbf{ANOVA} aplicado a los precios de leche fueron los siguientes:
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|c|c|l|}
+		\hline
+		\textbf{Marca} & \textbf{Estadístico F} & \textbf{Valor p} & \textbf{Conclusión} \\ \hline
+		Lala & 17.6009 & 0.0002 & Rechazar H$_0$ \\ \hline
+		Alpura & 28.1179 & 0.0000 & Rechazar H$_0$ \\ \hline
+		Santa Clara & 2.5262 & 0.1285 & No rechazar H$_0$ \\ \hline
+		Great Value & 5.6127 & 0.0317 & Rechazar H$_0$ \\ \hline
+		San Marcos & 0.0330 & 0.8630 & No rechazar H$_0$ \\ \hline
+	\end{tabular}
+	\caption{Resultados de ANOVA por marca de leche}
+	\label{tab:anova}
+\end{table}
+
+\begin{figure}[H]
+     \centering
+     \includegraphics[width=\columnwidth]{fig1_dist_lala.PNG}
+     \caption{Distribución F marca LALA.}
+     \label{fig:etiqueta}
+ \end{figure}
+ 
+ \begin{figure}[H]
+ 	\centering
+ 	\includegraphics[width=\columnwidth]{fig3_dist_sanmarcos.PNG}
+ 	\caption{Distribución F marca San Marcos.}
+ 	\label{fig:etiqueta}
+ \end{figure}
+ 
+ Para las marcas Lala, Alpura y Great Value, Bodega Aurrera resultó significativamente más barato que Walmart, con diferencias de \$4.63, \$4.22 y \$3.15, respectivamente. Para Santa Clara y San Marcos no se encontraron diferencias estadísticas. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\columnwidth]{fig2_boxplot_lala.PNG}
+	\caption{Boxplot comparativa de precio por litro marca LALA entre tiendas Bodega Aurrera y Walmart.}
+	\label{fig:etiqueta}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\columnwidth]{fig4_boxplot_sanmarcos.PNG}
+	\caption{Boxplot comparativa de precio por litro marca San Marcos entre tiendas Bodega Aurrera y Walmart.}
+	\label{fig:etiqueta}
+\end{figure}
+
+Después del ANOVA se aplicó prueba de Tukey para identificar diferencias significativas entre tiendas y obtener intervalos de confianza.
+
+Para las \textbf{observaciones pareadas} ($n = 223$) se calculó el estadístico
+$T = \bar{D}/S_{\bar{D}}$, donde $S_{\bar{D}} = S_D/\sqrt{n}$, siguiendo una
+distribución $t$ con $\nu = 222$ grados de libertad. La prueba bilateral arrojó
+$T = 9.5583$ y $p \approx 0$, con $\text{IC}_{95\%}(\mu_D) = (1.6531,\ 2.5119)$.
+Al excluir el cero, se rechaza $H_0$ con $\alpha = 0.05$: Walmart cobra entre
+\$1.65 y \$2.51~MXN más que Bodega Aurrera por los mismos productos.
+
+\begin{figure}[H]
+	\centering
+\includegraphics[width=\columnwidth]{barras_precios_promedio.PNG}
+\caption{Comparativo de los precios promedio.}
+\label{fig:etiqueta}
+\end{figure}
+
+Como se ilustra en la Fig.~5, Walmart cobra, en promedio, entre \$1.65 y \$2.51 pesos más que Bodega Aurrera 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\columnwidth]{dist_t_pareada.PNG}
+	\caption{Distribucion T para la observacion pareada.}
+	\label{fig:etiqueta}
+\end{figure}
+
+Para el arroz, los resultados de la prueba \textbf{Shapiro-Wilk} \cite{scipy_shapiro} mostraron que La Comer fue la unica cuyo valor p resultó menor a 0.05, por lo que se rechazó la hipotesis nula. Para las demás cadenas se asumió normalidad en sus distribuciones de precios.
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|c|c|c|}
+		\hline
+		\textbf{Tienda} & \textbf{W\_Manual} & \textbf{p-valor} & \textbf{Normalidad} \\ \hline
+		Bodega Aurrera & 0.9280 & 0.1416 & Sí \\ \hline
+		La Comer       & 0.9392 & 0.0395 & No \\ \hline
+		Soriana        & 0.9564 & 0.2182 & Sí \\ \hline
+		Walmart        & 0.9608 & 0.4307 & Sí \\ \hline
+	\end{tabular}
+	\caption{Resultados Shapiro-Wilk por tienda (arroz).}
+	\label{tab:shapiro}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\columnwidth]{hist_lacomer.PNG}
+	\caption{Distribucion de precios en La Comer.}
+	\label{fig:etiqueta}
+\end{figure}
+
+Los resultados de la razón entre varianzas se resumen en el Cuadro~\ref{tab:varianzas}.
+Para todos los pares, $H_0$: $\sigma^2_1=\sigma^2_2$ y $H_1$: $\sigma^2_1\ne\sigma^2_2$.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|c|c|l|}
+		\hline
+		\textbf{Comparación} & \textbf{$F_{calc}$} & \textbf{$F_{crit}$} & \textbf{Resultado} \\ \hline
+		B. A. vs Walmart & 2.4924 & 2.4060 & Rechaza $H_0$ \\ \hline
+		B. A. vs Soriana & 2.5318 & 2.390  & Rechaza $H_0$ \\ \hline
+		Walmart vs Soriana        & 1.0158 & 2.210  & No rechaza $H_0$ \\ \hline
+	\end{tabular}
+	\caption{Razón entre varianzas por par de tiendas (arroz).}
+	\label{tab:varianzas}
+\end{table}
+
+Al comparar Bodega Aurrera contra Walmart y Soriana, se rechazó la hipótesis nula ($H_0$), concluyendo que la dispersión de sus precios es significativamente diferente, lo que sugiere una política de precios menos uniforme o una mayor variedad de marcas.
+
+\begin{figure}[H]
+	\centering
+\includegraphics[width=\columnwidth]{boxplot_dispersion_arroz.PNG}
+\caption{Boxplot de precios por tienda.}
+\label{fig:etiqueta}
+\end{figure}
+
+Para incluir a La Comer se aplicó la prueba de \textbf{Levene} ($H_0$: homocedasticidad,
+$H_1$: heterocedasticidad), obteniendo $F_{Levene}=3.9351>F_{crit}=2.689$, por lo que
+se rechaza $H_0$: existe heterocedasticidad entre las cuatro tiendas.
+
+Dado que el valor calculado fue mayor al valor crítico, se rechazó $H_0$. Existe evidencia estadística suficiente para concluir que las varianzas de los precios del arroz no son iguales entre las cuatro tiendas, es decir, existe heterocedasticidad.
+
+\textit{Error Tipo I}: en \textbf{observaciones pareadas}, implicaría concluir erróneamente que Walmart tiene precios mayores que Bodega Aurrera cuando no existe tal diferencia, con probabilidad limitada por $\alpha = 0.05$. En \textbf{razón de varianzas}, significaría afirmar incorrectamente que las varianzas entre tiendas son distintas.
+
+\textit{Error Tipo II}: en \textbf{observaciones pareadas}, consistiría en no detectar una diferencia real entre ambas cadenas; sin embargo, dado $n = 223$ y $T = 9.5583$, su probabilidad es baja. En \textbf{razón de varianzas}, equivaldría a asumir que Walmart y Soriana tienen varianzas iguales cuando sus precios fluctúan de forma distinta.
+
+\section{Discusión}
+
+Los tres análisis convergen en confirmar diferencias estadísticamente significativas entre
+cadenas, aunque su magnitud varía según producto y marca.
+
+En \textbf{leche}, el ANOVA rechaza H\textsubscript{0} parcialmente: Bodega Aurrera es
+significativamente más barato en marcas masivas y propia (Lala $-$\$4.63, Alpura
+$-$\$4.22, Great Value $-$\$3.15~MXN/L), mientras que para Santa Clara y San Marcos
+no existe diferencia estadística ($p > 0.05$).
+
+Las \textbf{observaciones pareadas} ($n = 223$, $T = 9.5583$, $p \approx 0$) confirman
+que Walmart cobra entre \$1.65 y \$2.51~MXN más por los mismos productos, diferencia
+pequeña a nivel individual pero acumulable en una despensa completa.
+
+Para el \textbf{arroz}, Bodega Aurrera presenta mayor dispersión de precios que Walmart
+y Soriana ($F_{calc} > F_{crit}$), mientras que estas dos últimas no difieren entre sí. La
+prueba de Levene ($F = 3.9351 > F_{crit} = 2.689$) confirma heterocedasticidad global,
+descartando ANOVA estándar para comparar promedios de arroz.
+
+El análisis controló el Error Tipo~I con $\alpha = 0.05$; en categorías con muestras
+reducidas persiste un margen de Error Tipo~II donde diferencias sutiles podrían no
+detectarse.
+
+\bibliographystyle{apalike}
+\bibliography{referencias}
+
+
+\end{document}
